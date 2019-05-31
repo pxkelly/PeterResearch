@@ -10,12 +10,3 @@
       "X" "X won"
       "O" "O won"
       nil "No winner"))
-
-
-(defn tic-tac-toe-input
-  "Makes a Tic Tac Toe input."
-  [in]
-    (case in
-      0 "."
-      1 "O"
-      2 "X"))
