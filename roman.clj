@@ -56,3 +56,7 @@
           (= (first roman) \V) (recur (drop 1 roman) (+ number 5))
           (= (first roman) \I) (recur (drop 1 roman) (+ number 1))
           :else number))))
+
+(defn tester
+  []
+  (roman-numerals-input (inc (rand-int 4000))))
