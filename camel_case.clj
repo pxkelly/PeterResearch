@@ -1,4 +1,4 @@
-Camel Case;; camel_case.clj
+;; camel_case.clj
 ;; Peter Kelly, pxkelly@hamilton.edu
 ;;
 ;; Problem Source: https://www.codewars.com/kata/517abf86da9663f1d2000003
@@ -149,25 +149,26 @@ Camel Case;; camel_case.clj
 
 ; Define the argmap
 (def argmap
-  {:error-function camel-case-error-function
-   :atom-generators camel-case-atom-generators
-   :max-points 3200
-   :max-genome-size-in-initial-program 400
-   :evalpush-limit 1600
-   :population-size 1000
-   :max-generations 300
-   :parent-selection :lexicase
-   :genetic-operator-probabilities {:alternation 0.2
-                                    :uniform-mutation 0.2
-                                    :uniform-close-mutation 0.1
-                                    [:alternation :uniform-mutation] 0.5
-                                    }
-   :alternation-rate 0.01
-   :alignment-deviation 10
-   :uniform-mutation-rate 0.01
-   :problem-specific-report camel-case-report
-   :problem-specific-initial-report camel-case-initial-report
-   :report-simplifications 0
-   :final-report-simplifications 5000
-   :max-error 5000
-   })
+ {:error-function (make-camel-case-error-function-from-cases (first camel-case-train-and-test-cases)
+                                                                     (second camel-case-train-and-test-cases))
+  :atom-generators camel-case-atom-generators
+  :max-points 1200
+  :max-genome-size-in-initial-program 150
+  :evalpush-limit 600
+  :population-size 1000
+  :max-generations 300
+  :parent-selection :lexicase
+  :genetic-operator-probabilities {:alternation 0.2
+                                   :uniform-mutation 0.2
+                                   :uniform-close-mutation 0.1
+                                   [:alternation :uniform-mutation] 0.5
+                                   }
+  :alternation-rate 0.01
+  :alignment-deviation 10
+  :uniform-mutation-rate 0.01
+  :problem-specific-report camel-case-report
+  :problem-specific-initial-report camel-case-initial-report
+  :report-simplifications 0
+  :final-report-simplifications 5000
+  :max-error 100000
+  })
