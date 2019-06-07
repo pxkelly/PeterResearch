@@ -20,6 +20,7 @@
   [row col]
   (apply str (repeatedly (* row col) #(char (+ 97 (rand-int 26))))))
 
+; Helper function 1 for input
 (defn puzzle-word-creation
   [row col direction puzzle]
   (cond
@@ -29,7 +30,17 @@
                   (< current (* row col)) (recur (+ current col) (str word (nth puzzle current)))
                   :else word))))
 
-(defn make-word
-  [puzzle use-puzzle]
-  (if (= use-puzzle true)
-      ))
+  ; Helper function 2 for input
+  (defn make-word
+    [row col puzzle use-puzzle]
+    (if (= use-puzzle 1)
+        (puzzle-word-creation row col (rand-int 2) puzzle)
+        (apply str (repeatedly row #(char (+ 97 (rand-int 26)))))))
+
+;; Define test cases
+(defn word-search-input
+  "Makes a word search input of size row col."
+  [row col]
+  (let [puzzle (apply str (repeatedly (* row col) #(char (+ 97 (rand-int 26)))))
+        word (make-word row col puzzle (rand-int 2))]
+        (vector word puzzle row col)))
