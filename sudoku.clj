@@ -34,7 +34,7 @@
         (every? true? (map check board))
         (every? true? (map check (apply map vector board)))
         (every? true? (map check (square-divide board))))
-        true false))
+        (first (first board)) -1))
 
 (defn solve
   [board]

@@ -18,19 +18,21 @@
 
 (defn solve
   [word puzzle]
-  (loop [current "" letter 0 row 0 col 0 direction "" start-row 0 same-letter false]
+  (loop [current "" letter 0 row 0 col 0 direction "" start-row 0 same-letter false index [-1 -1]]
     (cond
-      (= (apply str current) word) true   ; word has been found
+      (= (apply str current) word) index   ; word has been found
       (and (= same-letter false)
-           (= (str (nth word letter)) (str (nth (nth puzzle row) col)))) (recur (concat current (nth (nth puzzle row) col)) (inc letter) row col direction start-row true)
+           (= (str (nth word letter)) (str (nth (nth puzzle row) col)))) (recur (concat current (nth (nth puzzle row) col)) (inc letter) row col direction start-row true (if (= letter 0) [row col] index))
       (and (= row (dec (count puzzle)))
-           (= col (dec (count (first puzzle))))) false   ; word was not found
+           (= col (dec (count (first puzzle))))) [-1 -1]   ; word was not found
       (and (= (str (nth word letter)) (str (nth (nth puzzle row) (inc col) nil))) ; letter to the right
-           (or (= direction "") (= direction "right"))) (recur current letter row (inc col) "right" start-row false)
+           (or (= direction "") (= direction "right"))
+           (not= letter 0)) (recur current letter row (inc col) "right" start-row false index)
       (and (= (str (nth word letter)) (str (nth (nth puzzle (inc row) nil) col))) ; letter down
-           (or (= direction "") (= direction "down"))) (recur current letter (inc row) col "down" start-row false)
-      (= col (dec (count (first puzzle)))) (recur "" 0 (inc start-row) 0 "" (inc start-row) false) ; no letter, advance row, reset col
-      :else (recur "" 0 start-row (inc col) "" start-row false)))) ; no letter, advance col
+           (or (= direction "") (= direction "down"))
+           (not= letter 0)) (recur current letter (inc row) col "down" start-row false index)
+      (= col (dec (count (first puzzle)))) (recur "" 0 (inc start-row) 0 "" (inc start-row) false [-1 -1]) ; no letter, advance row, reset col, reset index
+      :else (recur "" 0 start-row (inc col) "" start-row false [-1 -1])))) ; no letter, advance col, reset index
 
 (defn create
   [row col]
